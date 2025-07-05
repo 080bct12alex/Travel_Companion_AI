@@ -1,0 +1,62 @@
+/* Replace #root with Tailwind classes in your component */
+/* Original styles preserved with Tailwind enhancements */
+
+.logo {
+  @apply h-24 p-6;
+  will-change: filter;
+  transition: filter 300ms;
+}
+
+.logo:hover {
+  filter: drop-shadow(0 0 2em hsl(var(--primary) / 0.67));
+}
+
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em hsl(var(--sidebar-ring) / 0.67));
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+/* Card component - now using Tailwind variables */
+.card {
+  @apply p-8 bg-card text-card-foreground rounded-lg border border-border;
+}
+
+.read-the-docs {
+  @apply text-muted-foreground;
+}
+
+/* Additional responsive improvements */
+@media (max-width: 640px) {
+  .logo {
+    @apply h-16 p-4;
+  }
+  
+  .card {
+    @apply p-4;
+  }
+}
+
+/* Motion-safe animations */
+@layer utilities {
+  .motion-safe {
+    @media (prefers-reduced-motion: no-preference) {
+      &-spin {
+        animation: logo-spin infinite 20s linear;
+      }
+    }
+  }
+}
