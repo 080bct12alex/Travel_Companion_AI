@@ -55,7 +55,8 @@ export function TravelItinerary({ itinerary }: TravelItineraryProps) {
                   const duration = flight.match(/Duration: (\d+)/)?.[1];
                   const airline = flight.match(/Airline: ([^\n]+)/)?.[1];
                   const flightNumber = flight.match(/Flight Number: ([^\n]+)/)?.[1];
-                  const bookingToken = flight.match(/booking_token: ([^\n]+)/)?.[1];
+                  const bookingToken = flight.match(/Booking Token: ([^\n]+)/)?.[1]; // <-- Updated regex here
+
 
                   return (
                     <TableRow key={index}>
