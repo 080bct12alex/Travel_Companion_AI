@@ -28,7 +28,7 @@
 
   <h2>🧠 Tech Stack</h2>
   <ul>
-    <li><strong>Frontend:</strong> TypeScript, Vite</li>
+    <li><strong>Frontend:</strong> TypeScript, React</li>
     <li><strong>AI Model:</strong> Google Generative AI (Gemini)</li>
     <li><strong>Backend:</strong> Express.js (hosted on Render)</li>
     
