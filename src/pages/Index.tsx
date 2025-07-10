@@ -3,6 +3,7 @@ import { TravelForm } from "@/components/TravelForm";
 import { TravelItinerary } from "@/components/TravelItinerary";
 import { generateTravelPlan, TravelPreferences } from "@/lib/gemini";
 import { useToast } from "@/components/ui/use-toast";
+import { SettingsDialog } from "@/components/SettingsDialog";
 
 const Index = () => {
   const [itinerary, setItinerary] = useState("");
@@ -37,7 +38,7 @@ const Index = () => {
             <h1 className="text-4xl font-bold text-travel-primary">
               Travel Companion AI
             </h1>
-          
+            <SettingsDialog />
           </div>
           <p className="text-center text-gray-300 mb-8">
             Let Travel Companion AI help you plan your perfect trip
