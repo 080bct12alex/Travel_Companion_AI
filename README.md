@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Travel Companion AI - README</title>
+  
 </head>
 <body>
   <h1>✈️ Travel Companion AI</h1>
