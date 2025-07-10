@@ -67,7 +67,8 @@ async function fetchFlights(source: string, destination: string, date: string) {
     }
 
     const data = await response.json();
-    return data.best_flights || [];
+return Array.isArray(data) ? data : [];
+
   } catch (error) {
     console.error("Error fetching flights from backend:", error);
     return [];
