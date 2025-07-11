@@ -88,45 +88,24 @@ const prompt = `Act as a travel planning expert.
 
 Create a detailed travel itinerary based on the following preferences:
 
-- **Departure City:** ${preferences.source}  
-- **Destination City:** ${preferences.destination}  
-- **Travel Dates:** ${preferences.startDate} to ${preferences.endDate}  
-- **Budget:** ${preferences.budget}  
-- **Number of Travelers:** ${preferences.travelers}  
-- **Interests:** ${preferences.interests}  
-${preferences.includeTransportation ? "- Include transportation (flight) options." : ""}
+- Traveling from: ${preferences.source}  
+- Destination: ${preferences.destination}  
+- Dates: ${preferences.startDate} to ${preferences.endDate}  
+- Budget: ${preferences.budget}  
+- Number of Travelers: ${preferences.travelers}  
+- Interests: ${preferences.interests}  
+${preferences.includeTransportation ? "Include transportation options." : ""}
 
----
+Please include:
 
-## 🗓️ Daily Itinerary with Timings
+1. Daily itinerary with timings  
+2. Estimated costs  
+3. Recommended accommodations  
+4. Must-visit places  
+5. Travel tips  
+${preferences.includeTransportation ? "6. Suggested flights" : ""}
 
-Provide a clear day-by-day schedule including specific activities and approximate times.
-
----
-
-## 💰 Estimated Costs
-
-Break down the expected costs for flights, accommodation, food, activities, transportation, and any other major expenses.
-
----
-
-## 🏨 Recommended Accommodations
-
-Suggest budget-friendly lodging options such as hostels, Airbnbs, or affordable hotels, including location tips.
-
----
-
-## 📍 Must-Visit Places
-
-List key attractions and experiences tailored to the traveler’s interests and budget.
-
----
-
-## ✈️ Travel Tips
-
-Include practical advice on local transport, safety, language, cultural customs, and money-saving tips.
-
-${preferences.includeTransportation ? "## ✈️ Suggested Flight Options\n\nInclude flight options with prices and durations based on the user's departure city." : ""}
+Format clearly with headings and bullet points.
 `;
 
 
