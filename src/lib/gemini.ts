@@ -84,24 +84,34 @@ export async function generateTravelPlan(preferences: TravelPreferences) {
   const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
   const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-  const prompt = `Act as a travel planning expert. Create a detailed travel itinerary based on the following preferences:
-  - Traveling from: ${preferences.source}
-  - Destination: ${preferences.destination}
-  - Dates: ${preferences.startDate} to ${preferences.endDate}
-  - Budget: ${preferences.budget}
-  - Number of Travelers: ${preferences.travelers}
-  - Interests: ${preferences.interests}
-  ${preferences.includeTransportation ? "Include transportation options." : ""}
+const prompt = `You are a professional travel planning expert.
 
-Please include:
-1. Daily itinerary with timings
-2. Estimated costs
-3. Recommended accommodations
-4. Must-visit places
-5. Travel tips
-${preferences.includeTransportation ? "6. Suggested flights" : ""}
+Create a detailed travel itinerary based on the following user preferences:
 
-Format clearly with headings and bullet points.`;
+- **Departure City:** ${preferences.source}
+- **Destination City:** ${preferences.destination}
+- **Travel Dates:** ${preferences.startDate} to ${preferences.endDate}
+- **Budget:** ${preferences.budget}
+- **Number of Travelers:** ${preferences.travelers}
+- **Interests:** ${preferences.interests}
+${preferences.includeTransportation ? "- Include transportation (flight) options." : ""}
+
+The itinerary should include:
+
+1. 🗓️ A **daily schedule** with specific activities and timings
+2. 💰 **Estimated cost breakdown** for the whole trip
+3. 🏨 **Recommended accommodations**
+4. 📍 **Must-visit attractions and activities**
+5. ✈️ **Travel tips and cultural advice**
+${preferences.includeTransportation ? "6. ✈️ Suggested flight options with price and duration" : ""}
+
+**Formatting Requirements:**
+- Use clear headings (e.g., ## Day 1: Arrival in X)
+- Use bullet points for itemized content
+- Keep the tone informative, friendly, and concise
+- Output should be in Markdown format
+`;
+
 
   try {
     const result = await model.generateContent(prompt);
