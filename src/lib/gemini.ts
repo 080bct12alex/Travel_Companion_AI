@@ -88,25 +88,47 @@ const prompt = `Act as a travel planning expert.
 
 Create a detailed travel itinerary based on the following preferences:
 
-- Traveling from: ${preferences.source}  
-- Destination: ${preferences.destination}  
-- Dates: ${preferences.startDate} to ${preferences.endDate}  
-- Budget: ${preferences.budget}  
-- Number of Travelers: ${preferences.travelers}  
-- Interests: ${preferences.interests}  
-${preferences.includeTransportation ? "Include transportation options." : ""}
+  - Traveling from: ${preferences.source}
+  - Destination: ${preferences.destination}
+  - Dates: ${preferences.startDate} to ${preferences.endDate}
+  - Budget: ${preferences.budget}
+  - Number of Travelers: ${preferences.travelers}
+  - Interests: ${preferences.interests}
+  ${preferences.includeTransportation ? "Include transportation options." : ""}
 
 Please include:
+---
 
-1. Daily itinerary with timings  
-2. Estimated costs  
-3. Recommended accommodations  
-4. Must-visit places  
-5. Travel tips  
-${preferences.includeTransportation ? "6. Suggested flights" : ""}
 
-Format clearly with headings and bullet points.
+## 🗓️ Daily Itinerary with Timings
+
+
+
+---
+
+
+# 💰 Estimated Costs
+
+
+
+---
+
+## 🏨 Recommended Accommodations
+
+
+
+---
+
+## 📍 Must-Visit Places
+
+
+---
+
+## ✈️ Travel Tips
+
+
 `;
+
 
 
 
