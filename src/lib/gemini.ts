@@ -144,7 +144,6 @@ Example:
 
 ## 💵 Estimated Costs
 
-Display the estimated cost breakdown in a Markdown table format
 
 
 
