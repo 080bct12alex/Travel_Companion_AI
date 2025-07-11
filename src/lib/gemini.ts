@@ -84,50 +84,85 @@ export async function generateTravelPlan(preferences: TravelPreferences) {
   const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
   const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-const prompt = `Act as a travel planning expert.
+const prompt = `Act as a travel planning expert. Create a detailed travel itinerary based on the following preferences:
 
-Create a detailed travel itinerary based on the following preferences:
-
-  - Traveling from: ${preferences.source}
-  - Destination: ${preferences.destination}
-  - Dates: ${preferences.startDate} to ${preferences.endDate}
-  - Budget: ${preferences.budget}
-  - Number of Travelers: ${preferences.travelers}
-  - Interests: ${preferences.interests}
+  - Traveling from: ${preferences.source}  
+  - Destination: ${preferences.destination}  
+  - Dates: ${preferences.startDate} to ${preferences.endDate}  
+  - Budget: ${preferences.budget}  
+  - Number of Travelers: ${preferences.travelers}  
+  - Interests: ${preferences.interests}  
   ${preferences.includeTransportation ? "Include transportation options." : ""}
 
-Please include:
+Please include:  
+1. Daily itinerary with timings  
+2. Estimated costs  
+3. Recommended accommodations  
+4. Must-visit places  
+5. Travel tips  
+${preferences.includeTransportation ? "6. Suggested flights" : ""}
+
+
+
+Format the response clearly using the following structure with headings and horizontal lines Markdown --- ,Emojis to make it more engaging
+
+
+
 ---
 
+## 📆 Daily Itinerary
 
-## 🗓️ Daily Itinerary with Timings
+Provide a detailed, day-by-day plan with suggested timings and activities. Use bullet points for clarity.
 
+Example:
 
-
----
-
-
-# 💰 Estimated Costs
-
-
+**Day 1: Arrival & Local Exploration**  
+-  Arrive at 
+  
 
 ---
 
-## 🏨 Recommended Accommodations
+## 🏨 Accommodations
 
-
+...
 
 ---
 
 ## 📍 Must-Visit Places
 
+...
 
 ---
 
 ## ✈️ Travel Tips
 
+...
 
+
+
+---
+
+## 💵 Estimated Costs
+
+Display the estimated cost breakdown in a Markdown table format like below:
+
+| Category         | Estimated Cost (per person) |
+|------------------|-----------------------------|
+| Flights          | \$XXX                       |
+| Accommodation    | \$XXX                       |
+| Meals            | \$XXX                       |
+| Transportation   | \$XXX                       |
+| Activities       | \$XXX                       |
+| **Total**        | **\$XXX**                   |
+
+
+
+
+
+
+---
 `;
+
 
 
 
