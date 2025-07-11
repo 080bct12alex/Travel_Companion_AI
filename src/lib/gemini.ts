@@ -144,16 +144,9 @@ Example:
 
 ## 💵 Estimated Costs
 
-Display the estimated cost breakdown in a Markdown table format like below:
+Display the estimated cost breakdown in a Markdown table format
 
-| Category         | Estimated Cost (per person) |
-|------------------|-----------------------------|
-| Flights          | \$XXX                       |
-| Accommodation    | \$XXX                       |
-| Meals            | \$XXX                       |
-| Transportation   | \$XXX                       |
-| Activities       | \$XXX                       |
-| **Total**        | **\$XXX**                   |
+
 
 
 
