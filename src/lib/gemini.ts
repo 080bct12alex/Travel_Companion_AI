@@ -84,33 +84,51 @@ export async function generateTravelPlan(preferences: TravelPreferences) {
   const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
   const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-const prompt = `You are a professional travel planning expert.
+const prompt = `Act as a travel planning expert.
 
-Create a detailed travel itinerary based on the following user preferences:
+Create a detailed travel itinerary based on the following preferences:
 
-- **Departure City:** ${preferences.source}
-- **Destination City:** ${preferences.destination}
-- **Travel Dates:** ${preferences.startDate} to ${preferences.endDate}
-- **Budget:** ${preferences.budget}
-- **Number of Travelers:** ${preferences.travelers}
-- **Interests:** ${preferences.interests}
+- **Departure City:** ${preferences.source}  
+- **Destination City:** ${preferences.destination}  
+- **Travel Dates:** ${preferences.startDate} to ${preferences.endDate}  
+- **Budget:** ${preferences.budget}  
+- **Number of Travelers:** ${preferences.travelers}  
+- **Interests:** ${preferences.interests}  
 ${preferences.includeTransportation ? "- Include transportation (flight) options." : ""}
 
-The itinerary should include:
+---
 
-1. 🗓️ A **daily schedule** with specific activities and timings
-2. 💰 **Estimated cost breakdown** for the whole trip
-3. 🏨 **Recommended accommodations**
-4. 📍 **Must-visit attractions and activities**
-5. ✈️ **Travel tips and cultural advice**
-${preferences.includeTransportation ? "6. ✈️ Suggested flight options with price and duration" : ""}
+## 🗓️ Daily Itinerary with Timings
 
-**Formatting Requirements:**
-- Use clear headings (e.g., ## Day 1: Arrival in X)
-- Use bullet points for itemized content
-- Keep the tone informative, friendly, and concise
-- Output should be in Markdown format
+Provide a clear day-by-day schedule including specific activities and approximate times.
+
+---
+
+## 💰 Estimated Costs
+
+Break down the expected costs for flights, accommodation, food, activities, transportation, and any other major expenses.
+
+---
+
+## 🏨 Recommended Accommodations
+
+Suggest budget-friendly lodging options such as hostels, Airbnbs, or affordable hotels, including location tips.
+
+---
+
+## 📍 Must-Visit Places
+
+List key attractions and experiences tailored to the traveler’s interests and budget.
+
+---
+
+## ✈️ Travel Tips
+
+Include practical advice on local transport, safety, language, cultural customs, and money-saving tips.
+
+${preferences.includeTransportation ? "## ✈️ Suggested Flight Options\n\nInclude flight options with prices and durations based on the user's departure city." : ""}
 `;
+
 
 
   try {
