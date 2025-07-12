@@ -14,7 +14,7 @@
   <h2>🚀 Features</h2>
   <ul>
     <li>Generates detailed travel itineraries using Google Gemini (Gemini 1.5 Flash)</li>
-    <li>Real-time flight search via backend API</li>
+    <li>Real-time flight search via backend API - <a href="https://github.com/080bct12alex/Travel_Companion_AI_API" target="_blank" rel="noopener noreferrer">GitHub Repo</a></li>
     <li>Customizable travel preferences:
       <ul>
         <li>Source and destination</li>
