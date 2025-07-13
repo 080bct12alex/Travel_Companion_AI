@@ -11,6 +11,16 @@
     A smart travel planner powered by <strong>Gemini AI</strong> and real-time flight data. This app generates personalized travel itineraries based on user preferences and can optionally suggest flight options.
   </p>
 
+  #  🌐 [Live Website](https://travelcompanionai.onrender.com)
+
+---
+
+> 🔗 **Backend GitHub Repository**   
+> - Backend: [ Travel Companion AI API](https://github.com/080bct12alex/Travel_Companion_AI_API)
+
+---
+
+
   <h2>🚀 Features</h2>
   <ul>
     <li>Generates detailed travel itineraries using Google Gemini (Gemini 1.5 Flash)</li>
