@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Chat } from "./Chat";
+import { useMemo } from "react";
 
 interface TravelItineraryProps {
   itinerary: string;
@@ -17,11 +18,14 @@ interface TravelItineraryProps {
 export function TravelItinerary({ itinerary }: TravelItineraryProps) {
   if (!itinerary) return null;
 
-  // Split the itinerary into main content and flights section
-  const [mainContent, flightsSection] = itinerary.split("## Available Flights");
+  // Use memo to ensure consistent splitting
+  const [mainContent, flightsSection] = useMemo(() => {
+    return itinerary.split("## Available Flights");
+  }, [itinerary]);
 
-  // Parse flight data from markdown if available
-  const flightData = flightsSection?.match(/Option \d+[\s\S]*?(?=Option|\Z)/g) || [];
+  const flightData = useMemo(() => {
+    return flightsSection?.match(/Option \d+[\s\S]*?(?=Option|\Z)/g) || [];
+  }, [flightsSection]);
 
   return (
     <div className="mt-8 space-y-8">
@@ -38,7 +42,9 @@ export function TravelItinerary({ itinerary }: TravelItineraryProps) {
             <h3 className="text-xl font-semibold mb-4 text-travel-primary">
               Available Flights
             </h3>
-            <div className="block md:hidden"> {/* Mobile view */}
+
+            {/* Mobile view up to < lg */}
+            <div className="block lg:hidden">
               {flightData.length > 0 ? (
                 <div className="space-y-4">
                   {flightData.map((flight, index) => {
@@ -85,7 +91,9 @@ export function TravelItinerary({ itinerary }: TravelItineraryProps) {
                 <p>No flights found</p>
               )}
             </div>
-            <div className="hidden md:block"> {/* Desktop view - original table */}
+
+            {/* Desktop view for >= lg */}
+            <div className="hidden lg:block">
               <Table>
                 <TableHeader>
                   <TableRow>
