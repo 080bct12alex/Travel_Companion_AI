@@ -38,37 +38,36 @@ export function TravelItinerary({ itinerary }: TravelItineraryProps) {
             <h3 className="text-xl font-semibold mb-4 text-travel-primary">
               Available Flights
             </h3>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Option</TableHead>
-                  <TableHead>Price</TableHead>
-                  <TableHead>Duration</TableHead>
-                  <TableHead>Airline</TableHead>
-                  <TableHead>Flight Number</TableHead>
-                  <TableHead>Action</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {flightData.map((flight, index) => {
-                  const price = flight.match(/Price: \$(\d+)/)?.[1];
-                  const duration = flight.match(/Duration: (\d+)/)?.[1];
-                  const airline = flight.match(/Airline: ([^\n]+)/)?.[1];
-                  const flightNumber = flight.match(/Flight Number: ([^\n]+)/)?.[1];
-                  const bookingToken = flight.match(/Booking Token: ([^\n]+)/)?.[1]; // <-- Updated regex here
+            <div className="block md:hidden"> {/* Mobile view */}
+              {flightData.length > 0 ? (
+                <div className="space-y-4">
+                  {flightData.map((flight, index) => {
+                    const price = flight.match(/Price: \$(\d+)/)?.[1];
+                    const duration = flight.match(/Duration: (\d+)/)?.[1];
+                    const airline = flight.match(/Airline: ([^\n]+)/)?.[1];
+                    const flightNumber = flight.match(/Flight Number: ([^\n]+)/)?.[1];
+                    const bookingToken = flight.match(/Booking Token: ([^\n]+)/)?.[1];
 
-
-                  return (
-                    <TableRow key={index}>
-                      <TableCell>{index + 1}</TableCell>
-                      <TableCell>${price}</TableCell>
-                      <TableCell>{duration} mins</TableCell>
-                      <TableCell>{airline}</TableCell>
-                      <TableCell>{flightNumber}</TableCell>
-                      <TableCell>
+                    return (
+                      <div key={index} className="p-4 border rounded-lg bg-black/50">
+                        <div className="flex justify-between items-center mb-2">
+                          <span className="font-medium">Option {index + 1}</span>
+                          <span className="font-bold text-travel-primary">${price}</span>
+                        </div>
+                        <div className="grid grid-cols-2 gap-2 text-sm mb-3">
+                          <div>
+                            <span className="text-muted-foreground">Duration:</span> {duration} mins
+                          </div>
+                          <div>
+                            <span className="text-muted-foreground">Airline:</span> {airline}
+                          </div>
+                          <div className="col-span-2">
+                            <span className="text-muted-foreground">Flight:</span> {flightNumber}
+                          </div>
+                        </div>
                         <Button
                           variant="outline"
-                          className="text-travel-primary hover:text-travel-primary/80"
+                          className="w-full text-travel-primary hover:text-travel-primary/80"
                           onClick={() => {
                             window.open(
                               `https://www.google.com/flights/booking?token=${bookingToken}`,
@@ -78,12 +77,61 @@ export function TravelItinerary({ itinerary }: TravelItineraryProps) {
                         >
                           Book Now
                         </Button>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-              </TableBody>
-            </Table>
+                      </div>
+                    );
+                  })}
+                </div>
+              ) : (
+                <p>No flights found</p>
+              )}
+            </div>
+            <div className="hidden md:block"> {/* Desktop view - original table */}
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Option</TableHead>
+                    <TableHead>Price</TableHead>
+                    <TableHead>Duration</TableHead>
+                    <TableHead>Airline</TableHead>
+                    <TableHead>Flight Number</TableHead>
+                    <TableHead>Action</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {flightData.map((flight, index) => {
+                    const price = flight.match(/Price: \$(\d+)/)?.[1];
+                    const duration = flight.match(/Duration: (\d+)/)?.[1];
+                    const airline = flight.match(/Airline: ([^\n]+)/)?.[1];
+                    const flightNumber = flight.match(/Flight Number: ([^\n]+)/)?.[1];
+                    const bookingToken = flight.match(/Booking Token: ([^\n]+)/)?.[1];
+
+                    return (
+                      <TableRow key={index}>
+                        <TableCell>{index + 1}</TableCell>
+                        <TableCell>${price}</TableCell>
+                        <TableCell>{duration} mins</TableCell>
+                        <TableCell>{airline}</TableCell>
+                        <TableCell>{flightNumber}</TableCell>
+                        <TableCell>
+                          <Button
+                            variant="outline"
+                            className="text-travel-primary hover:text-travel-primary/80"
+                            onClick={() => {
+                              window.open(
+                                `https://www.google.com/flights/booking?token=${bookingToken}`,
+                                "_blank"
+                              );
+                            }}
+                          >
+                            Book Now
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+                </TableBody>
+              </Table>
+            </div>
           </div>
         )}
       </div>
