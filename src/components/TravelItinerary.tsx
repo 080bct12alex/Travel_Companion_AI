@@ -29,7 +29,6 @@ export function TravelItinerary({ itinerary }: TravelItineraryProps) {
         <h2 className="text-2xl font-semibold mb-4 text-travel-primary">
           Your Travel Itinerary
         </h2>
-
         <div className="prose prose-sm md:prose-base lg:prose-lg max-w-none">
           <ReactMarkdown>{mainContent}</ReactMarkdown>
         </div>
@@ -39,9 +38,7 @@ export function TravelItinerary({ itinerary }: TravelItineraryProps) {
             <h3 className="text-xl font-semibold mb-4 text-travel-primary">
               Available Flights
             </h3>
-
-            {/* Mobile card layout (<1280px) */}
-            <div className="block xl:hidden">
+            <div className="block md:hidden"> {/* Mobile view */}
               {flightData.length > 0 ? (
                 <div className="space-y-4">
                   {flightData.map((flight, index) => {
@@ -88,9 +85,7 @@ export function TravelItinerary({ itinerary }: TravelItineraryProps) {
                 <p>No flights found</p>
               )}
             </div>
-
-            {/* Desktop table layout (≥1280px) */}
-            <div className="hidden xl:block">
+            <div className="hidden md:block"> {/* Desktop view - original table */}
               <Table>
                 <TableHeader>
                   <TableRow>
@@ -140,8 +135,6 @@ export function TravelItinerary({ itinerary }: TravelItineraryProps) {
           </div>
         )}
       </div>
-
-      {/* AI Chat Component */}
       <Chat itinerary={itinerary} />
     </div>
   );
