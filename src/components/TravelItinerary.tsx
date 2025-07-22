@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Chat } from "./Chat";
-import { useMemo } from "react";
 
 interface TravelItineraryProps {
   itinerary: string;
@@ -18,14 +17,11 @@ interface TravelItineraryProps {
 export function TravelItinerary({ itinerary }: TravelItineraryProps) {
   if (!itinerary) return null;
 
-  // Use memo to ensure consistent splitting
-  const [mainContent, flightsSection] = useMemo(() => {
-    return itinerary.split("## Available Flights");
-  }, [itinerary]);
+  // Split the itinerary into main content and flights section
+  const [mainContent, flightsSection] = itinerary.split("## Available Flights");
 
-  const flightData = useMemo(() => {
-    return flightsSection?.match(/Option \d+[\s\S]*?(?=Option|\Z)/g) || [];
-  }, [flightsSection]);
+  // Parse flight data from markdown if available
+  const flightData = flightsSection?.match(/Option \d+[\s\S]*?(?=Option|\Z)/g) || [];
 
   return (
     <div className="mt-8 space-y-8">
@@ -33,6 +29,7 @@ export function TravelItinerary({ itinerary }: TravelItineraryProps) {
         <h2 className="text-2xl font-semibold mb-4 text-travel-primary">
           Your Travel Itinerary
         </h2>
+
         <div className="prose prose-sm md:prose-base lg:prose-lg max-w-none">
           <ReactMarkdown>{mainContent}</ReactMarkdown>
         </div>
@@ -43,8 +40,8 @@ export function TravelItinerary({ itinerary }: TravelItineraryProps) {
               Available Flights
             </h3>
 
-            {/* Mobile view up to < lg */}
-            <div className="block lg:hidden">
+            {/* Mobile card layout (<1280px) */}
+            <div className="block xl:hidden">
               {flightData.length > 0 ? (
                 <div className="space-y-4">
                   {flightData.map((flight, index) => {
@@ -92,8 +89,8 @@ export function TravelItinerary({ itinerary }: TravelItineraryProps) {
               )}
             </div>
 
-            {/* Desktop view for >= lg */}
-            <div className="hidden lg:block">
+            {/* Desktop table layout (≥1280px) */}
+            <div className="hidden xl:block">
               <Table>
                 <TableHeader>
                   <TableRow>
@@ -143,6 +140,8 @@ export function TravelItinerary({ itinerary }: TravelItineraryProps) {
           </div>
         )}
       </div>
+
+      {/* AI Chat Component */}
       <Chat itinerary={itinerary} />
     </div>
   );
