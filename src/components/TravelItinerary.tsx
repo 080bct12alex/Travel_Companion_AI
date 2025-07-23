@@ -39,7 +39,7 @@ export function TravelItinerary({ itinerary }: TravelItineraryProps) {
               Available Flights
             </h3>
             <div className="block md:hidden"> {/* Mobile view */}
-              {flightData.length > 0 ? (
+              {flightData && flightData.length > 0 ? (
                 <div className="space-y-4">
                   {flightData.map((flight, index) => {
                     const price = flight.match(/Price: \$(\d+)/)?.[1];
@@ -82,7 +82,7 @@ export function TravelItinerary({ itinerary }: TravelItineraryProps) {
                   })}
                 </div>
               ) : (
-                <p>No flights found</p>
+                <p className="text-center py-4">No flights found for this route.</p>
               )}
             </div>
             <div className="hidden md:block"> {/* Desktop view - original table */}
