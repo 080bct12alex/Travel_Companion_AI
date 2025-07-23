@@ -82,55 +82,59 @@ export function TravelItinerary({ itinerary }: TravelItineraryProps) {
                   })}
                 </div>
               ) : (
-                <p className="text-center py-4">No flights found for this route.</p>
+                <p className="text-center py-4 text-muted-foreground">No flight information available for this route. Please try again with different dates or destinations.</p>
               )}
             </div>
             <div className="hidden md:block"> {/* Desktop view - original table */}
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Option</TableHead>
-                    <TableHead>Price</TableHead>
-                    <TableHead>Duration</TableHead>
-                    <TableHead>Airline</TableHead>
-                    <TableHead>Flight Number</TableHead>
-                    <TableHead>Action</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {flightData.map((flight, index) => {
-                    const price = flight.match(/Price: \$(\d+)/)?.[1];
-                    const duration = flight.match(/Duration: (\d+)/)?.[1];
-                    const airline = flight.match(/Airline: ([^\n]+)/)?.[1];
-                    const flightNumber = flight.match(/Flight Number: ([^\n]+)/)?.[1];
-                    const bookingToken = flight.match(/Booking Token: ([^\n]+)/)?.[1];
+              {flightData && flightData.length > 0 ? (
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Option</TableHead>
+                      <TableHead>Price</TableHead>
+                      <TableHead>Duration</TableHead>
+                      <TableHead>Airline</TableHead>
+                      <TableHead>Flight Number</TableHead>
+                      <TableHead>Action</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {flightData.map((flight, index) => {
+                      const price = flight.match(/Price: \$(\d+)/)?.[1];
+                      const duration = flight.match(/Duration: (\d+)/)?.[1];
+                      const airline = flight.match(/Airline: ([^\n]+)/)?.[1];
+                      const flightNumber = flight.match(/Flight Number: ([^\n]+)/)?.[1];
+                      const bookingToken = flight.match(/Booking Token: ([^\n]+)/)?.[1];
 
-                    return (
-                      <TableRow key={index}>
-                        <TableCell>{index + 1}</TableCell>
-                        <TableCell>${price}</TableCell>
-                        <TableCell>{duration} mins</TableCell>
-                        <TableCell>{airline}</TableCell>
-                        <TableCell>{flightNumber}</TableCell>
-                        <TableCell>
-                          <Button
-                            variant="outline"
-                            className="text-travel-primary hover:text-travel-primary/80"
-                            onClick={() => {
-                              window.open(
-                                `https://www.google.com/flights/booking?token=${bookingToken}`,
-                                "_blank"
-                              );
-                            }}
-                          >
-                            Book Now
-                          </Button>
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
-                </TableBody>
-              </Table>
+                      return (
+                        <TableRow key={index}>
+                          <TableCell>{index + 1}</TableCell>
+                          <TableCell>${price}</TableCell>
+                          <TableCell>{duration} mins</TableCell>
+                          <TableCell>{airline}</TableCell>
+                          <TableCell>{flightNumber}</TableCell>
+                          <TableCell>
+                            <Button
+                              variant="outline"
+                              className="text-travel-primary hover:text-travel-primary/80"
+                              onClick={() => {
+                                window.open(
+                                  `https://www.google.com/flights/booking?token=${bookingToken}`,
+                                  "_blank"
+                                );
+                              }}
+                            >
+                              Book Now
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
+                  </TableBody>
+                </Table>
+              ) : (
+                <p className="text-center py-4 text-muted-foreground">No flight information available for this route. Please try again with different dates or destinations.</p>
+              )}
             </div>
           </div>
         )}
