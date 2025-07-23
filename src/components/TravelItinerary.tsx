@@ -20,21 +20,8 @@ export function TravelItinerary({ itinerary }: TravelItineraryProps) {
   // Split the itinerary into main content and flights section
   const [mainContent, flightsSection] = itinerary.split("## Available Flights");
 
-  // More robust flight data parsing
-  let flightData = [];
-  if (flightsSection && flightsSection.trim()) {
-    // First try the existing regex pattern
-    flightData = flightsSection.match(/Option \d+[\s\S]*?(?=Option|\Z)/g) || [];
-    
-    // If no matches found, try an alternative approach
-    if (flightData.length === 0) {
-      // Split by Option keyword as a fallback
-      const parts = flightsSection.split(/Option \d+/);
-      // Filter out empty parts and process the rest
-      flightData = parts.filter(part => part.trim())
-                        .map((part, index) => `Option ${index + 1}${part}`);
-    }
-  }
+  // Parse flight data from markdown if available
+  const flightData = flightsSection?.match(/Option \d+[\s\S]*?(?=Option|\Z)/g) || [];
 
   return (
     <div className="mt-8 space-y-8">
@@ -52,8 +39,7 @@ export function TravelItinerary({ itinerary }: TravelItineraryProps) {
               Available Flights
             </h3>
             <div className="block md:hidden"> {/* Mobile view */}
-              <pre style={{color:'red',fontSize:'10px',overflow:'auto'}}>{JSON.stringify(flightData,null,2)}</pre>
-              {flightData && flightData.length > 0 ? (
+              {flightData.length > 0 ? (
                 <div className="space-y-4">
                   {flightData.map((flight, index) => {
                     const price = flight.match(/Price: \$(\d+)/)?.[1];
@@ -96,59 +82,55 @@ export function TravelItinerary({ itinerary }: TravelItineraryProps) {
                   })}
                 </div>
               ) : (
-                <p className="text-center py-4 text-muted-foreground">No flight information available for this route. Please try again with different dates or destinations.</p>
+                <p>No flights found</p>
               )}
             </div>
             <div className="hidden md:block"> {/* Desktop view - original table */}
-              {flightData && flightData.length > 0 ? (
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Option</TableHead>
-                      <TableHead>Price</TableHead>
-                      <TableHead>Duration</TableHead>
-                      <TableHead>Airline</TableHead>
-                      <TableHead>Flight Number</TableHead>
-                      <TableHead>Action</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {flightData.map((flight, index) => {
-                      const price = flight.match(/Price: \$(\d+)/)?.[1];
-                      const duration = flight.match(/Duration: (\d+)/)?.[1];
-                      const airline = flight.match(/Airline: ([^\n]+)/)?.[1];
-                      const flightNumber = flight.match(/Flight Number: ([^\n]+)/)?.[1];
-                      const bookingToken = flight.match(/Booking Token: ([^\n]+)/)?.[1];
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Option</TableHead>
+                    <TableHead>Price</TableHead>
+                    <TableHead>Duration</TableHead>
+                    <TableHead>Airline</TableHead>
+                    <TableHead>Flight Number</TableHead>
+                    <TableHead>Action</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {flightData.map((flight, index) => {
+                    const price = flight.match(/Price: \$(\d+)/)?.[1];
+                    const duration = flight.match(/Duration: (\d+)/)?.[1];
+                    const airline = flight.match(/Airline: ([^\n]+)/)?.[1];
+                    const flightNumber = flight.match(/Flight Number: ([^\n]+)/)?.[1];
+                    const bookingToken = flight.match(/Booking Token: ([^\n]+)/)?.[1];
 
-                      return (
-                        <TableRow key={index}>
-                          <TableCell>{index + 1}</TableCell>
-                          <TableCell>${price}</TableCell>
-                          <TableCell>{duration} mins</TableCell>
-                          <TableCell>{airline}</TableCell>
-                          <TableCell>{flightNumber}</TableCell>
-                          <TableCell>
-                            <Button
-                              variant="outline"
-                              className="text-travel-primary hover:text-travel-primary/80"
-                              onClick={() => {
-                                window.open(
-                                  `https://www.google.com/flights/booking?token=${bookingToken}`,
-                                  "_blank"
-                                );
-                              }}
-                            >
-                              Book Now
-                            </Button>
-                          </TableCell>
-                        </TableRow>
-                      );
-                    })}
-                  </TableBody>
-                </Table>
-              ) : (
-                <p className="text-center py-4 text-muted-foreground">No flight information available for this route. Please try again with different dates or destinations.</p>
-              )}
+                    return (
+                      <TableRow key={index}>
+                        <TableCell>{index + 1}</TableCell>
+                        <TableCell>${price}</TableCell>
+                        <TableCell>{duration} mins</TableCell>
+                        <TableCell>{airline}</TableCell>
+                        <TableCell>{flightNumber}</TableCell>
+                        <TableCell>
+                          <Button
+                            variant="outline"
+                            className="text-travel-primary hover:text-travel-primary/80"
+                            onClick={() => {
+                              window.open(
+                                `https://www.google.com/flights/booking?token=${bookingToken}`,
+                                "_blank"
+                              );
+                            }}
+                          >
+                            Book Now
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+                </TableBody>
+              </Table>
             </div>
           </div>
         )}
