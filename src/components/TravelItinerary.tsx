@@ -52,6 +52,7 @@ export function TravelItinerary({ itinerary }: TravelItineraryProps) {
               Available Flights
             </h3>
             <div className="block md:hidden"> {/* Mobile view */}
+              <pre style={{color:'red',fontSize:'10px',overflow:'auto'}}>{JSON.stringify(flightData,null,2)}</pre>
               {flightData && flightData.length > 0 ? (
                 <div className="space-y-4">
                   {flightData.map((flight, index) => {
