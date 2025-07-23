@@ -20,8 +20,21 @@ export function TravelItinerary({ itinerary }: TravelItineraryProps) {
   // Split the itinerary into main content and flights section
   const [mainContent, flightsSection] = itinerary.split("## Available Flights");
 
-  // Parse flight data from markdown if available
-  const flightData = flightsSection?.match(/Option \d+[\s\S]*?(?=Option|\Z)/g) || [];
+  // More robust flight data parsing
+  let flightData = [];
+  if (flightsSection && flightsSection.trim()) {
+    // First try the existing regex pattern
+    flightData = flightsSection.match(/Option \d+[\s\S]*?(?=Option|\Z)/g) || [];
+    
+    // If no matches found, try an alternative approach
+    if (flightData.length === 0) {
+      // Split by Option keyword as a fallback
+      const parts = flightsSection.split(/Option \d+/);
+      // Filter out empty parts and process the rest
+      flightData = parts.filter(part => part.trim())
+                        .map((part, index) => `Option ${index + 1}${part}`);
+    }
+  }
 
   return (
     <div className="mt-8 space-y-8">
